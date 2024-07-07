@@ -87,6 +87,7 @@ def zip_files(oss_client, source_dir, source_files, dest_file):
     upload_id = oss_client.init_multipart_upload(dest_file).upload_id
 
     def zip_add_file(zip_file, key, dir):
+        new_key = ""
         if dir is None:
             dir = ""
             new_key = "photo".join(os.path.basename(key))
