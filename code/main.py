@@ -90,7 +90,7 @@ def zip_files(oss_client, source_dir, source_files, dest_file):
         new_key = ""
         if dir is None:
             dir = ""
-            new_key = "photo".join(os.path.basename(key))
+            new_key = "photo/" + os.path.basename(key)
         else:
             new_key = key.replace(dir, "", 1)
         LOG.info("add zip file key: %s, zip_key: %s", key, new_key)
