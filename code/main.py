@@ -86,6 +86,13 @@ def zip_files(oss_client, source_dir, source_files, dest_file):
     start_time = time.time()
     upload_id = oss_client.init_multipart_upload(dest_file).upload_id
 
+    def split_key(key):
+        parts = key.split('?', 1)
+        if len(parts) == 1:
+            return parts[0], None
+        else:
+            return parts[0], parts[1]
+
     def zip_add_file(zip_file, key, dir):
         new_key = ""
         if dir is None:
@@ -96,7 +103,12 @@ def zip_files(oss_client, source_dir, source_files, dest_file):
         LOG.info("add zip file key: %s, zip_key: %s", key, new_key)
         if key[-1] == "/":  # filter dir
             return
-        obj = oss_client.get_object(key)
+        filename, process = split_key(key)
+        obj = None
+        if process is None:
+            obj = oss_client.get_object(filename)
+        else:
+            obj = oss_client.get_object(filename, process=process)
         zip_file.write_file(new_key, obj, compress_type=zipfile.ZIP_STORED)
 
     def producer(queue):
