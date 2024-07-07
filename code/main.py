@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from urllib.parse import urlparse
 import os
 import json
 import time
@@ -16,6 +17,15 @@ LOG = logging.getLogger()
 # FC handler
 # event: the config, see event.json for example
 # return: the signed url of the zip file
+
+def get_filename_from_url(url):
+    # Parse the URL to separate the path
+    parsed_url = urlparse(url)
+    # Extract the path part
+    path = parsed_url.path
+    # Get the base name (file name) from the path
+    filename = os.path.basename(path)
+    return filename
 
 
 def main_handler(event, context):
@@ -97,7 +107,7 @@ def zip_files(oss_client, source_dir, source_files, dest_file):
         new_key = ""
         if dir is None:
             dir = ""
-            new_key = "photo/" + os.path.basename(key)
+            new_key = "photo/" + get_filename_from_url(key)
         else:
             new_key = key.replace(dir, "", 1)
         LOG.info("add zip file key: %s, zip_key: %s", key, new_key)
