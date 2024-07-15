@@ -6,7 +6,7 @@ resources:
   fc-zip-oss-service:
     component: fc3
     props:
-      region: 'cn-beijing'
+      region: 'cn-shanghai'
       handler: main.main_handler
       timeout: 1800
       runtime: python3.9
