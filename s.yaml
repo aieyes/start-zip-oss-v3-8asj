@@ -6,12 +6,12 @@ resources:
   fc-zip-oss-service:
     component: fc3
     props:
-      region: 'cn-shanghai'
+      region: 'cn-beijing'
       handler: main.main_handler
       timeout: 1800
       runtime: python3.9
       memorySize: 3072
-      role: 'acs:ram::1896510936375701:role/aliyunfcdefaultrole'
+      role: 'acs:ram::1034821396135495:role/aliyunfcdefaultrole'
       internetAccess: true
       functionName: 'zip-oss-func-8asj'
       code: ./code
